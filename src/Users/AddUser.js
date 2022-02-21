@@ -7,26 +7,20 @@ const AddUser = (props) => {
   const [enteredUserName, setEnteredUserName] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
 
-  
-
   const onSubmitHandler = (event) => {
     event.preventDefault();
 
     if (+enteredAge.trim().length > 0 && enteredUserName.trim().length > 0) {
-
-      const newUser = 
-        {
-          userId : Math.random().toString(),
-          userName : enteredUserName,
-          userAge : enteredAge
-        };
-      console.log(enteredUserName, enteredAge);
+      const newUser = {
+        userId: Math.random().toString(),
+        userName: enteredUserName,
+        userAge: enteredAge,
+      };
       props.onAddUser(newUser);
       setEnteredUserName("");
       setEnteredAge("");
-    }
-    else{
-        return;
+    } else {
+      return;
     }
   };
 

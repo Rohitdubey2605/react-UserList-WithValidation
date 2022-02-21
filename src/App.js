@@ -17,7 +17,6 @@ function App() {
     setNewUser((prevUserList) => {
       return [newUserInfo, ...prevUserList];
     });
-    console.log(newUser);
   };
 
   return (
