@@ -1,3 +1,4 @@
+import Wrapper from "../Helpers/Wrapper";
 import Button from "./Button";
 import Card from "./Card";
 import styles from "./ErrorModal.module.css";
@@ -8,7 +9,7 @@ const ErrorModal = (props) => {
         props.cancel();
     }
   return (
-    <div>
+    <Wrapper>
       <div className={styles.backdrop} onClick={OnCancel} />
       <Card className={styles.modal}>
         <header className={styles.header}>
@@ -21,7 +22,7 @@ const ErrorModal = (props) => {
           <Button type="cancel" onClick={OnCancel}>Close</Button>
         </footer>
       </Card>
-    </div>
+    </Wrapper>
   );
 };
 
