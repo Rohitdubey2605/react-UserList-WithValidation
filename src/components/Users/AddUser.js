@@ -1,5 +1,5 @@
-import { useState } from "react";
-import Wrapper from "../Helpers/Wrapper";
+import { Fragment, useState } from "react";
+// import Wrapper from "../Helpers/Wrapper";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
@@ -47,7 +47,7 @@ const AddUser = (props) => {
   }
 
   return (
-    <Wrapper>
+    <Fragment>
       {!isValidData && (
         <ErrorModal cancel={errorHandler} title={error.title} message={error.message} />
       )}
@@ -71,7 +71,7 @@ const AddUser = (props) => {
         </form>
         <Button children="Add User" type="submit" onClick={onSubmitHandler} />
       </Card>
-    </Wrapper>
+    </Fragment>
   );
 };
 
