@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 // import Wrapper from "../Helpers/Wrapper";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
@@ -6,13 +6,19 @@ import ErrorModal from "../UI/ErrorModal";
 import styles from "./AddUser.module.css";
 
 const AddUser = (props) => {
-  const [enteredUserName, setEnteredUserName] = useState("");
-  const [enteredAge, setEnteredAge] = useState("");
+  let nameInputRef = useRef();
+  let ageInputRef = useRef();
+
+  let enteredUserName;
+  let enteredAge;
   const [isValidData, setIsValidData] = useState(true);
   const [error, setError] = useState();
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+
+    enteredAge = ageInputRef.current.value;
+    enteredUserName = nameInputRef.current.value;
 
     if (+enteredAge.trim().length > 0 && enteredUserName.trim().length > 0) {
       const newUser = {
@@ -21,8 +27,10 @@ const AddUser = (props) => {
         userAge: enteredAge,
       };
       props.onAddUser(newUser);
-      setEnteredUserName("");
-      setEnteredAge("");
+      nameInputRef.current.value = "";
+      ageInputRef.current.value = "";
+      // DO NOT Perform the above DOM manipulation in Big Projects
+      // Better use state for this 
     } else {
       setIsValidData(false);
       setError({
@@ -33,40 +41,45 @@ const AddUser = (props) => {
     }
   };
 
-  const userNameChangeHandler = (event) => {
-    setEnteredUserName(event.target.value);
-  };
+  // const userNameChangeHandler = (event) => {
+  //   setEnteredUserName(event.target.value);
+  // };
 
-  const ageChangeHandler = (event) => {
-    setEnteredAge(event.target.value);
-  };
+  // const ageChangeHandler = (event) => {
+  //   setEnteredAge(event.target.value);
+  // };
 
-  const errorHandler = ()=>
-  {
+  const errorHandler = () => {
     setIsValidData(true);
-  }
+  };
 
   return (
     <Fragment>
       {!isValidData && (
-        <ErrorModal cancel={errorHandler} title={error.title} message={error.message} />
+        <ErrorModal
+          cancel={errorHandler}
+          title={error.title}
+          message={error.message}
+        />
       )}
       <Card className={styles.input}>
         <form className={styles.formControl} onSubmit={onSubmitHandler}>
           <label htmlFor="username">User Name</label>
           <input
             id="username"
-            value={enteredUserName}
+            // value={enteredUserName}
             type="text"
-            onChange={userNameChangeHandler}
+            // onChange={userNameChangeHandler}
+            ref={nameInputRef}
           />
           <label htmlFor="age">Age (Years)</label>
           <input
             id="age"
-            value={enteredAge}
+            // value={enteredAge}
             type="number"
             min="0"
-            onChange={ageChangeHandler}
+            // onChange={ageChangeHandler}
+            ref={ageInputRef}
           />
         </form>
         <Button children="Add User" type="submit" onClick={onSubmitHandler} />
